@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MyApp.PageModels;
+using MyApp.PageModels.Base;
+using MyApp.Services.Navigation;
+using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,12 +13,17 @@ namespace MyApp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+        Task InitNaviggation()
         {
+            var navService = PageModelLocator.Resolve<INavigationService>();
+            return navService.NavigateToAsync<LoginPageModel>();
+        }
+
+        protected override async void OnStart()
+        {
+            await InitNaviggation();
         }
 
         protected override void OnSleep()
